@@ -59,15 +59,17 @@ function initApp(config) {
         }
 
         function createResultRow(content) {
-            // TODO: use data-objectid to store the id
+            // TODO: use data-objectid to store the id?
             // TODO: would be better to have a global event listener instead of
-            // one per element
+            // one per element?
+            // TODO: don't use a mixture of createElement and innerHTML, be consistant
             var newEl = document.createElement('li');
-            var elContent = document.createTextNode(content.name);
             var deleteButton = document.createElement('button');
-            var deleteButtonContent = document.createTextNode('Delete');
+            deleteButton.setAttribute('type', 'button');
+            deleteButton.setAttribute('title', 'Delete');
+            var deleteButtonContent = document.createTextNode('X');
+            newEl.innerHTML = content._highlightResult.name.value;
             deleteButton.appendChild(deleteButtonContent);
-            newEl.appendChild(elContent);
             newEl.appendChild(deleteButton);
 
             deleteButton.addEventListener('click', function (e) {

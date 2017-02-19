@@ -11,13 +11,12 @@
 
     <body>
         <form>
-            <input id="searchInput" type="text" value="" placeholder="Search for an app...">
-            <button type="button" value="go">Search</button>
-            <button id="addButton" type="button" value="add">Add</button>
-        </form>
+            <input id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off">
+            <button id="addButton" type="button" value="add">New</button>
 
-        <section id="results">
-        </section>
+            <section id="results">
+            </section>
+        </form>
 
         <script>
             initApp({
