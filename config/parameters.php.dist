@@ -1,0 +1,12 @@
+<?php
+
+$params = [
+    'algolia' => [
+        'applicationID' => '',
+        'apiKey_search' => '',
+        'apiKey_admin' => '',
+        'indexName' => 'apps',
+    ],
+];
+
+return $params;

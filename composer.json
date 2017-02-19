@@ -1,0 +1,10 @@
+{
+    "require": {
+        "algolia/algoliasearch-client-php": "^1.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "AlgoliaApp\\": "src/"
+        }
+    }
+}
