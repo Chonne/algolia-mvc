@@ -86,7 +86,7 @@ class Application
      * @param  int $code
      * @param  string $message
      */
-    private function renderError($code, $message)
+    private function renderError($code = 500, $message = 'An error has occurred')
     {
         $expectedCodes = [
             400,
