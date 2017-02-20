@@ -4,7 +4,7 @@
 
 ### backend
 
-- refactor the model part in a Model class
+- nothing?
 
 ### frontend
 

@@ -12,6 +12,7 @@ class Controller
     public function __construct(array $config)
     {
         $this->config = $config;
+        $this->model = new Model($config);
     }
 
     public function runHome()
@@ -37,13 +38,7 @@ class Controller
         $data = json_decode($_POST['data'], true);
 
         try {
-            $newApp = new AppEntity($data);
-
-            $index = $this->initIndex();
-
-            $newEntityFromIndexer = $index->addObject($data);
-
-            $newApp->setObjectId($newEntityFromIndexer['objectID']);
+            $newApp = $this->model->create('App', $data);
 
             http_response_code(201);
 
@@ -59,22 +54,9 @@ class Controller
      */
     public function runDeleteEntity($id)
     {
-        $index = $this->initIndex();
-        $index->deleteObject($id);
+        $this->model->delete($id);
 
         // Not necessary as it's the code by default
         http_response_code(200);
-    }
-
-    private function initIndex()
-    {
-        $client = new Client(
-            $this->config['parameters']['algolia']['applicationID'],
-            $this->config['parameters']['algolia']['apiKey_admin']
-        );
-
-        $index = $client->initIndex($this->config['parameters']['algolia']['indexName']);
-
-        return $index;
     }
 }
