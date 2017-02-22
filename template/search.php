@@ -14,7 +14,17 @@
             <input id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off">
             <button id="addButton" type="button" value="add">New</button>
 
-            <section id="results">
+            <section id="resultsCt">
+                <ul id="results">
+                    <template id="resultTpl">
+                        <li class="result" data-id="">
+                            <!-- <img src="" alt=""> -->
+                            <a class="name" title="view on iTunes" href=""></a>
+                            <span class="category"></span>
+                            <button type="button" title="Remove from index" class="delete">X</button>
+                        </li>
+                    </template>
+                </ul>
             </section>
         </form>
 

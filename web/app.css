@@ -42,11 +42,11 @@ button {
 	margin-left: 20px;
 }
 
-#results {
+#resultsCt {
 	width: calc(100% - 140px);
 }
 
-ul {
+#results {
 	list-style-type: none;
 	text-align: left;
 	margin: 0;
@@ -55,23 +55,31 @@ ul {
 	background: white;
 }
 
-ul li {
+#results .result {
 	border-bottom: 1px solid #ddd;
 	padding: 5px;
 }
 
-ul li:hover, ul li:active, ul li:focus {
+#results .result:hover, #results .result:active, #results .result:focus {
 	background: rgba(0, 174, 255, 0.2);
 }
 
-ul em {
+#results .result .name {
+	text-decoration: none;
+}
+
+#results em {
 	background-color: rgba(0, 174, 255, 0.3);
-	border: 1px solid rgba(0,0,0,0.1);
-	padding: 0 2px;
+	font-style: normal;
+}
+
+#results .category {
+	font-size: 0.7em;
+	color: #666;
 }
 
 /* TODO: use flexbox */
-ul button {
+#results .delete {
 	border-radius: 20px;
 	border-style: solid;
 	width: 33px;

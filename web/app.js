@@ -5,15 +5,26 @@ function initApp(config) {
     var client = algoliasearch(config.algolia_applicationID, config.algolia_apiKey);
     var index = client.initIndex(config.algolia_indexName);
 
-    var input = document.getElementById('searchInput');
+    var searchInput = document.getElementById('searchInput');
     var addButton = document.getElementById('addButton');
     var resultsEl = document.getElementById('results');
+    var resultTemplateContent = document.getElementById('resultTpl').content;
 
-    input.addEventListener('keyup', function (e) {
+    // Click event on the delete buttons
+    resultsEl.addEventListener('click', function (e) {
+        if (e.target.type === 'button' && e.target.classList.contains('delete')) {
+            var objectID = e.target.parentElement.dataset.id;
+            deleteEntity(objectID);
+
+            // TODO: add some kind of animation and remove the node
+        }
+    });
+
+    searchInput.addEventListener('keyup', function (e) {
         var toSearch = this.value;
 
-        if (toSearch === '' && resultsEl.hasChildNodes()) {
-            resultsEl.removeChild(resultsEl.firstChild);
+        if (toSearch === '') {
+            removeAllChildren(resultsEl);
         } else {
             // the last optional argument can be used to add search parameters
             index.search(
@@ -35,48 +46,46 @@ function initApp(config) {
             // TODO: what should happen next?
             addEntity(json);
         }
-    })
+    });
+
+    function removeAllChildren(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
 
     function searchCallback(err, content) {
         if (err) {
             console.error(err);
             return;
         } else {
-            if (resultsEl.hasChildNodes()) {
-                resultsEl.removeChild(resultsEl.firstChild);
-            }
+            removeAllChildren(resultsEl);
 
             if (content.hits.length > 0) {
                 var i;
-                var listContainer = document.createElement('ul');
 
                 for (i = 0; i < content.hits.length; i++) {
-                    listContainer.appendChild(createResultRow(content.hits[i]));
+                    resultsEl.appendChild(createResultRow(content.hits[i]));
                 }
-
-                resultsEl.appendChild(listContainer);
             }
         }
 
         function createResultRow(content) {
-            // TODO: use data-objectid to store the id?
-            // TODO: would be better to have a global event listener instead of
-            // one per element?
-            // TODO: don't use a mixture of createElement and innerHTML, be consistant
-            var newEl = document.createElement('li');
-            var deleteButton = document.createElement('button');
-            deleteButton.setAttribute('type', 'button');
-            deleteButton.setAttribute('title', 'Delete');
-            var deleteButtonContent = document.createTextNode('X');
-            newEl.innerHTML = content._highlightResult.name.value;
-            deleteButton.appendChild(deleteButtonContent);
-            newEl.appendChild(deleteButton);
+            var mainEl = resultTemplateContent.querySelector('.result');
+            var nameEl = resultTemplateContent.querySelector('.name');
+            var categoryEl = resultTemplateContent.querySelector('.category');
+            var externalLinkEl = resultTemplateContent.querySelector('.externalLink');
 
-            deleteButton.addEventListener('click', function (e) {
-                deleteEntity(content.objectID);
-            });
+            mainEl.dataset.id = content.objectID;
 
-            return newEl;
+            // may contain em tags for highlights
+            nameEl.innerHTML = content._highlightResult.name.value;
+            nameEl.href = content.link;
+
+            // may contain escaped chars
+            categoryEl.innerHTML = content.category;
+
+            return document.importNode(resultTemplateContent, true);
         }
 
         console.log(content);
