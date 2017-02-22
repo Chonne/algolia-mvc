@@ -11,10 +11,6 @@
 - make it prettier
 - add entity: either have a textarea for the json or a form with an input per field
 - results: display more than 5?
-- results: display the image (links don't work, though)
-- results: display the category
-- results: display the link to the app's store page
-- results: ask for a confirmation before removing an entity
 - add some keyboard shortcuts: '/' for the search input, 'Ctrl+N' to add an entity...
 - add extra info on the page, such as a link to this github, to Algolia's website, and to whatever else comes to mind
 

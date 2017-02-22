@@ -91,18 +91,17 @@ function initApp(config) {
         console.log(content);
     }
 
-    function deleteEntity(id, askToConfirm) {
-        if (askToConfirm === undefined) {
-            askToConfirm = true;
+    function deleteEntity(id, isConfirmed) {
+        // TODO: perhaps this confirmation thing could be done otherwise?
+        if (isConfirmed === undefined) {
+            deleteEntity(id, window.confirm('Are you sure you want to delete this object?'));
+        } else if(isConfirmed) {
+            // TODO: id is already a string, is this needed?
+            fetch('/api/1/apps/' + id.toString(), {method: 'DELETE'})
+            .then(function (response) {
+                console.log(response);
+            });
         }
-
-        // TODO: ask for confirmation
-
-        // TODO: id is already a string, is this needed?
-        fetch('/api/1/apps/' + id.toString(), {method: 'DELETE'})
-        .then(function (response) {
-            console.log(response);
-        });
     }
 
     function addEntity(json) {
