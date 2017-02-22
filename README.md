@@ -4,14 +4,15 @@
 
 ### backend
 
-- nothing?
+- put the view stuff in a Response class? It'll basically take care of setting the http response code and echoing a string or requiring a template with params, so I'm not sure it's necessary. It would make the POC more "MVC" though.
 
 ### frontend
 
 - make it prettier
 - add entity: either have a textarea for the json or a form with an input per field
 - results: display more than 5?
-- results: display the image
+- results: display the image (links don't work, though)
+- results: display the category
 - results: display the link to the app's store page
 - results: ask for a confirmation before removing an entity
 - add some keyboard shortcuts: '/' for the search input, 'Ctrl+N' to add an entity...
