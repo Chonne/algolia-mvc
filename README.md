@@ -9,7 +9,10 @@
 ### frontend
 
 - make it prettier
-- add entity: either have a textarea for the json or a form with an input per field
+- remove a result's row from the list after removing it
+- add message area for (usually successful) responses
+- add keyboard navigation for the results
+- close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?
 - add extra info on the page, such as a link to this github, to Algolia's website, and to whatever else comes to mind
 

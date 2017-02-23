@@ -17,10 +17,11 @@ button {
 	text-align: center;
 	width: 60%;
 	min-width: 700px;
+	position: relative;
 }
 
 #app * {
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 }
 
 /* TODO: use flexbox if allwowed */
@@ -29,28 +30,15 @@ button {
 	border-radius: 10px;
 	border-style: solid;
 	border-color: #999;
-	width: calc(100% - 170px);
+	width: calc(100% - 160px);
 	outline: none;
 }
 
-#addButton {
-	border-radius: 9px;
-	background: rgb(49, 49, 49);
-	color: #e8e8e8;
-	border-style: solid;
-	padding: 5px 30px;
-	border-color: rgb(0, 174, 255);
-	margin-left: 20px;
-}
-
-#addButton:focus, #addButton:active, #addButton:hover {
-	background-color: rgb(0, 131, 191);
-	border-color: rgb(49, 49, 49);
-	color: #fff;
-}
-
+/**
+ * Autocomplete results
+ */
 #resultsCt {
-	width: calc(100% - 140px);
+	width: calc(100% - 130px);
 }
 
 #results {
@@ -98,4 +86,63 @@ button {
 	font-size: 0.8em;
 
 	float: right;
+}
+
+/**
+ * Add button and form
+ */
+#addButton, #addForm button {
+	border-radius: 9px;
+	background: rgb(49, 49, 49);
+	color: #e8e8e8;
+	border-style: solid;
+	padding: 5px 30px;
+	border-color: rgb(0, 174, 255);
+	margin-left: 20px;
+}
+
+#addButton:focus, #addButton:active, #addButton:hover,
+#addForm button:focus, #addForm button:active, #addForm button:hover {
+	background-color: rgb(0, 131, 191);
+	border-color: rgb(49, 49, 49);
+	color: #fff;
+}
+
+#addForm {
+	background: #fff;
+	border: 2px solid #999;
+	border-radius: 10px;
+	padding: 10px;
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	position: absolute;
+	top: -100px;
+	margin-left: -262px;
+	left: 50%;
+	height: 240px;
+}
+
+#addForm.hidden {
+	display: none;
+}
+
+#addForm * {
+	font-size: 1.1rem;
+}
+
+#addForm header {
+	text-align: left;
+}
+
+#addForm textarea {
+	flex: 1;
+	resize: none;
+	outline: none;
+	margin: 10px 0;
+}
+
+#addForm footer {
+	text-align: right;
 }

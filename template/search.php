@@ -30,6 +30,24 @@
                     </template>
                 </ul>
             </div>
+
+            <form id="addForm" class="hidden">
+                <header>
+                    Add an app
+                </header>
+                <textarea>
+{
+    "name": "",
+    "image": "",
+    "link": "",
+    "category": "",
+    "rank": 1
+}</textarea>
+                <footer>
+                    <button type="submit" class="submit">Add</button>
+                    <button type="button" class="cancel">Cancel</button>
+                </footer>
+            </form>
         </div>
 
         <script>

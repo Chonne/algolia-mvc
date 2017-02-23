@@ -1,6 +1,6 @@
-
 /**
  * AlgoliaApp, simply creating its own scope
+ * TODO: this could be done in other ways, and the add form stuff could be elsewhere
  */
 const AlgoliaApp = (function(window) {
     let document = window.document;
@@ -10,6 +10,8 @@ const AlgoliaApp = (function(window) {
 
     let searchInput = null;
     let addButton = null;
+    let addForm = null;
+    let addFormTextarea = null;
     let resultsEl = null;
     let resultTemplateContent = null;
 
@@ -29,6 +31,8 @@ const AlgoliaApp = (function(window) {
     function initElements() {
         searchInput = document.getElementById('searchInput');
         addButton = document.getElementById('addButton');
+        addForm = document.getElementById('addForm');
+        addFormTextarea = addForm.querySelector('textarea');
         resultsEl = document.getElementById('results');
         resultTemplateContent = document.getElementById('resultTpl').content;
     }
@@ -65,27 +69,54 @@ const AlgoliaApp = (function(window) {
         });
 
         // TODO: do something better, this is only to test
-        addButton.addEventListener('click', showAddEntityForm);
+        addButton.addEventListener('click', showAddForm);
 
         document.addEventListener('keyup', function (e) {
             if (e.key === '/' && !e.ctrlKey && !e.altKey) {
-                searchInput.focus();
                 searchInput.select();
             }
 
             if (e.key === 'n' && e.ctrlKey && !e.altKey) {
-                showAddEntityForm();
+                showAddForm();
             }
+        });
+
+        initAddFormEvents();
+    }
+
+    function initAddFormEvents() {
+        const addFormCancelButton = addForm.querySelector('button.cancel');
+
+        addFormCancelButton.addEventListener('click', hideAddForm);
+
+        addForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            addEntity(addFormTextarea.value)
+            .then(function (response) {
+                // TODO: check for response.ok instead?
+                if (response.status !== 201) {
+                    return response.text().then(function (response) {
+                        throw response;
+                    });
+                }
+
+                hideAddForm();
+            }).catch(function (error) {
+                alert(error);
+                console.error(error);
+            });
         });
     }
 
-    function showAddEntityForm(e) {
-        const json = window.prompt('Paste json object');
+    function showAddForm() {
+        addForm.classList.remove('hidden');
+        addFormTextarea.select();
+    }
 
-        if (json !== '') {
-            // TODO: what should happen next?
-            addEntity(json);
-        }
+    function hideAddForm() {
+        addForm.classList.add('hidden');
+        addForm.reset();
     }
 
     function removeAllChildren(parent) {
@@ -145,13 +176,9 @@ const AlgoliaApp = (function(window) {
         let data = new FormData();
         data.append('data', json);
 
-        fetch('/api/1/apps', {
+        return fetch('/api/1/apps', {
             method: 'POST',
             body: data,
-        }).then(function (response) {
-            console.log(response);
-        }).catch(function (error) {
-            console.error(error);
         });
     }
 
