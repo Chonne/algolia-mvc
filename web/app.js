@@ -1,57 +1,114 @@
-// TODO: Replace this POC with something better, either an App object or something
-// else based on existing libraries
 
-function initApp(config) {
-    var client = algoliasearch(config.algolia_applicationID, config.algolia_apiKey);
-    var index = client.initIndex(config.algolia_indexName);
+/**
+ * AlgoliaApp, simply creating its own scope
+ */
+const AlgoliaApp = (function(window) {
+    let document = window.document;
 
-    var searchInput = document.getElementById('searchInput');
-    var addButton = document.getElementById('addButton');
-    var resultsEl = document.getElementById('results');
-    var resultTemplateContent = document.getElementById('resultTpl').content;
+    let searchClient = null;
+    let index = null;
 
-    // Click event on the delete buttons
-    resultsEl.addEventListener('click', function (e) {
-        if (e.target.type === 'button' && e.target.classList.contains('delete')) {
-            var objectID = e.target.parentElement.dataset.id;
-            deleteEntity(objectID);
+    let searchInput = null;
+    let addButton = null;
+    let resultsEl = null;
+    let resultTemplateContent = null;
 
-            // TODO: add some kind of animation and remove the node
-        }
-    });
+    function initApp(config) {
+        initSearchClient(config);
 
-    searchInput.addEventListener('keyup', function (e) {
-        var toSearch = this.value;
+        initElements();
 
-        if (toSearch === '') {
-            removeAllChildren(resultsEl);
-        } else {
-            // the last optional argument can be used to add search parameters
-            index.search(
-                toSearch, {
-                    hitsPerPage: 5,
-                    facets: '*',
-                    maxValuesPerFacet: 10
-                },
-                searchCallback
-            );
-        }
-    });
+        initEvents();
+    }
 
-    // TODO: do something better, this is only to test
-    addButton.addEventListener('click', function (e) {
-        var json = window.prompt('Paste json object');
+    function initSearchClient(config) {
+        searchClient = algoliasearch(config.algolia_applicationID, config.algolia_apiKey);
+        index = searchClient.initIndex(config.algolia_indexName);
+    }
+
+    function initElements() {
+        searchInput = document.getElementById('searchInput');
+        addButton = document.getElementById('addButton');
+        resultsEl = document.getElementById('results');
+        resultTemplateContent = document.getElementById('resultTpl').content;
+    }
+
+    function initEvents() {
+        // Click event on the delete buttons
+        resultsEl.addEventListener('click', function (e) {
+            if (e.target.type === 'button' && e.target.classList.contains('delete')) {
+                const objectID = e.target.parentElement.dataset.id;
+                deleteEntity(objectID);
+
+                // TODO: add some kind of animation and remove the node
+            }
+        });
+
+        // Pressing keys in the search input
+        searchInput.addEventListener('keyup', function (e) {
+            const toSearch = this.value;
+            e.stopPropagation();
+
+            if (toSearch === '') {
+                removeAllChildren(resultsEl);
+            } else {
+                // the last optional argument can be used to add search parameters
+                index.search(
+                    toSearch, {
+                        hitsPerPage: 5,
+                        facets: '*',
+                        maxValuesPerFacet: 10
+                    },
+                    searchCallback
+                );
+            }
+        });
+
+        // TODO: do something better, this is only to test
+        addButton.addEventListener('click', showAddEntityForm);
+
+        document.addEventListener('keyup', function (e) {
+            if (e.key === '/' && !e.ctrlKey && !e.altKey) {
+                searchInput.focus();
+                searchInput.select();
+            }
+
+            if (e.key === 'n' && e.ctrlKey && !e.altKey) {
+                showAddEntityForm();
+            }
+        });
+    }
+
+    function showAddEntityForm(e) {
+        const json = window.prompt('Paste json object');
 
         if (json !== '') {
             // TODO: what should happen next?
             addEntity(json);
         }
-    });
+    }
 
     function removeAllChildren(parent) {
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
+    }
+
+    function createResultRow(content) {
+        let mainEl = resultTemplateContent.querySelector('.result');
+        let nameEl = resultTemplateContent.querySelector('.name');
+        let categoryEl = resultTemplateContent.querySelector('.category');
+
+        mainEl.dataset.id = content.objectID;
+
+        // may contain em tags for highlights
+        nameEl.innerHTML = content._highlightResult.name.value;
+        nameEl.href = content.link;
+
+        // may contain escaped chars
+        categoryEl.innerHTML = content.category;
+
+        return document.importNode(resultTemplateContent, true);
     }
 
     function searchCallback(err, content) {
@@ -62,30 +119,10 @@ function initApp(config) {
             removeAllChildren(resultsEl);
 
             if (content.hits.length > 0) {
-                var i;
-
-                for (i = 0; i < content.hits.length; i++) {
+                for (let i = 0; i < content.hits.length; i++) {
                     resultsEl.appendChild(createResultRow(content.hits[i]));
                 }
             }
-        }
-
-        function createResultRow(content) {
-            var mainEl = resultTemplateContent.querySelector('.result');
-            var nameEl = resultTemplateContent.querySelector('.name');
-            var categoryEl = resultTemplateContent.querySelector('.category');
-            var externalLinkEl = resultTemplateContent.querySelector('.externalLink');
-
-            mainEl.dataset.id = content.objectID;
-
-            // may contain em tags for highlights
-            nameEl.innerHTML = content._highlightResult.name.value;
-            nameEl.href = content.link;
-
-            // may contain escaped chars
-            categoryEl.innerHTML = content.category;
-
-            return document.importNode(resultTemplateContent, true);
         }
 
         console.log(content);
@@ -105,7 +142,7 @@ function initApp(config) {
     }
 
     function addEntity(json) {
-        var data = new FormData();
+        let data = new FormData();
         data.append('data', json);
 
         fetch('/api/1/apps', {
@@ -117,4 +154,14 @@ function initApp(config) {
             console.error(error);
         });
     }
-}
+
+    return {
+        /**
+         * Initializes the "module"
+         * @param  {object} config Configuration for the Algolia search client
+         */
+        init: function(config) {
+            initApp(config);
+        }
+    };
+}(window));

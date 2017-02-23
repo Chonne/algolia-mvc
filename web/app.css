@@ -7,20 +7,20 @@ body {
 	font-family: sans-serif;
 }
 
-form {
+button {
+	cursor: pointer;
+	outline: none;
+}
+
+#app {
 	margin: 200px auto 0;
 	text-align: center;
 	width: 60%;
 	min-width: 700px;
 }
 
-form * {
+#app * {
 	font-size: 1.5rem;
-}
-
-button {
-	cursor: pointer;
-	outline: none;
 }
 
 /* TODO: use flexbox if allwowed */

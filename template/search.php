@@ -10,11 +10,15 @@
     </head>
 
     <body>
-        <form>
-            <input id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off">
-            <button id="addButton" type="button" value="add">New</button>
+        <!-- <header>
+            Built with <a href="https://www.algolia.com">Algolia</a>
+        </header> -->
 
-            <section id="resultsCt">
+        <div id="app">
+            <input id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off">
+            <button id="addButton" type="button" value="add" title="Add an app to the index (Ctrl+n)">New</button>
+
+            <div id="resultsCt">
                 <ul id="results">
                     <template id="resultTpl">
                         <li class="result" data-id="">
@@ -25,11 +29,11 @@
                         </li>
                     </template>
                 </ul>
-            </section>
-        </form>
+            </div>
+        </div>
 
         <script>
-            initApp({
+            AlgoliaApp.init({
                 algolia_applicationID: '<?php echo $templateParams['algolia_applicationID'] ?>',
                 algolia_apiKey: '<?php echo $templateParams['algolia_apiKey'] ?>',
                 algolia_indexName: '<?php echo $templateParams['algolia_indexName'] ?>',

@@ -11,7 +11,6 @@
 - make it prettier
 - add entity: either have a textarea for the json or a form with an input per field
 - results: display more than 5?
-- add some keyboard shortcuts: '/' for the search input, 'Ctrl+N' to add an entity...
 - add extra info on the page, such as a link to this github, to Algolia's website, and to whatever else comes to mind
 
 ## Install instructions
