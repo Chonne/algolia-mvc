@@ -15,8 +15,14 @@
         </header> -->
 
         <div id="app">
-            <input id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off">
-            <button id="addButton" type="button" value="add" title="Add an app to the index (Ctrl+n)">New</button>
+            <div id="msg" class="hidden">
+                <span class="content"></span>
+                <button type="button" class="hide"><i class="icons8-delete-2"></i></button>
+            </div>
+
+            <i class="icons8-search"></i>
+            <input disabled id="searchInput" type="text" value="" placeholder="Search for an app..." autocomplete="off" title="Search by name or category (keyboard shortcut: '/')">
+            <button disabled id="addButton" type="button" value="add" title="Add an app to the index (Ctrl+n)"><i class="icons8-plus"></i>New</button>
 
             <div id="resultsCt">
                 <ul id="results">
@@ -25,7 +31,7 @@
                             <!-- <img src="" alt=""> -->
                             <a class="name" title="view on iTunes" href=""></a>
                             <span class="category"></span>
-                            <button type="button" title="Remove from index" class="delete">X</button>
+                            <button type="button" title="Remove from index" class="delete" data-delete-entity="true"><i class="icons8-trash" data-delete-entity="true"></i></button>
                         </li>
                     </template>
                 </ul>

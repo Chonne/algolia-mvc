@@ -1,3 +1,5 @@
+@import url("css/font.css");
+
 html {
 	background: #f6f6f6;
 }
@@ -10,10 +12,15 @@ body {
 button {
 	cursor: pointer;
 	outline: none;
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 20%,rgba(0,0,0,0.2) 100%);
+}
+
+*[disabled] {
+	cursor: not-allowed;
 }
 
 #app {
-	margin: 200px auto 0;
+	margin: 140px auto 0;
 	text-align: center;
 	width: 60%;
 	min-width: 700px;
@@ -24,9 +31,67 @@ button {
 	font-size: 1.2rem;
 }
 
-/* TODO: use flexbox if allwowed */
+/**
+ * Message box
+ */
+#msg {
+	min-height: 60px;
+	margin-bottom: 30px;
+	display: flex;
+	text-align: left;
+	border-radius: 5px;
+	padding: 5px 5px 5px 10px;
+	border: 1px solid ;
+	border-width: 1px 10px;
+	background: rgb(255, 254, 190);
+	border-color: rgb(178, 177, 63);
+}
+
+#msg.hidden {
+	visibility: hidden;
+}
+
+#msg.error {
+	background: rgb(255, 170, 170);
+	border-color: rgb(128, 21, 21);
+}
+
+#msg .content {
+	flex: 1;
+	align-self: center;
+	font-size: 1.1rem;
+}
+
+#msg .hide {
+	border: 2px solid rgb(178, 177, 63);
+	border-radius: 12px;
+	height: 24px;
+	line-height: 16px;
+	width: 24px;
+	background: transparent;
+	padding: 0;
+	color: rgb(178, 177, 63);
+}
+
+#msg.error .hide {
+	border-color: rgb(128, 21, 21);
+	color: rgb(128, 21, 21);
+}
+
+#msg .hide i {
+	font-size: 0.9rem;
+}
+
+/* moving it "into" the search input */
+.icons8-search {
+	color: #46AEDA;
+	margin-right: -30px;
+	position: relative;
+}
+
+/* TODO: use flexbox */
 #searchInput {
-	padding: 5px 10px;
+	padding: 5px 5px 5px 27px;
 	border-radius: 10px;
 	border-style: solid;
 	border-color: #999;
@@ -46,17 +111,22 @@ button {
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	border: 1px solid #eee;
 	background: white;
 }
 
 #results .result {
-	border-bottom: 1px solid #ddd;
+	border: 1px solid #ddd;
+	border-width: 1px 1px 0;
 	padding: 5px;
+	min-height: 27px;
 }
 
 #results .result:hover, #results .result:active, #results .result:focus {
 	background: rgba(0, 174, 255, 0.2);
+}
+
+#results .result:last-of-type {
+	border-bottom-width: 1px;
 }
 
 #results .result .name {
@@ -68,44 +138,46 @@ button {
 	font-style: normal;
 }
 
-#results .category {
-	font-size: 0.7em;
+#results .category, #results .category em {
+	font-size: 0.9rem;
 	color: #666;
 }
 
 /* TODO: use flexbox */
-#results .delete {
-	border-radius: 20px;
+#results .result > .delete {
+	border-radius: 4px;
 	border-style: solid;
-	width: 33px;
+	width: 28px;
 	background: white;
-	border-color: #d60000;
-	color: #940000;
 	font-weight: bold;
 	outline: none;
 	font-size: 0.8em;
-
 	float: right;
+	padding: 0;
+}
+
+#results .result > .delete:hover {
+	border-color: rgb(128, 21, 21);
+	color: rgb(128, 21, 21);
 }
 
 /**
  * Add button and form
  */
 #addButton, #addForm button {
+	background-color: rgb(0, 131, 191);
+	border-color: rgb(49, 49, 49);
+	color: #fff;
 	border-radius: 9px;
-	background: rgb(49, 49, 49);
-	color: #e8e8e8;
 	border-style: solid;
-	padding: 5px 30px;
-	border-color: rgb(0, 174, 255);
+	padding: 5px 18px;
 	margin-left: 20px;
 }
 
 #addButton:focus, #addButton:active, #addButton:hover,
 #addForm button:focus, #addForm button:active, #addForm button:hover {
-	background-color: rgb(0, 131, 191);
-	border-color: rgb(49, 49, 49);
-	color: #fff;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 131, 191);
 }
 
 #addForm {
@@ -118,10 +190,11 @@ button {
 	flex-direction: column;
 	margin: auto;
 	position: absolute;
-	top: -100px;
+	top: 70px;
 	margin-left: -262px;
 	left: 50%;
 	height: 240px;
+	box-shadow: rgb(153, 153, 153) 4px 4px 16px 2px, rgb(153, 153, 153) -4px 4px 16px 2px;
 }
 
 #addForm.hidden {

@@ -1,0 +1,63 @@
+/*
+ * Icon Font 171b-4eb0-9136-95c4ae41553c
+ * Made with love by Icons8 [ https://icons8.com/ ] using FontCustom [ https://github.com/FontCustom/fontcustom ]
+ *
+ * Contacts:
+ *    [ https://icons8.com/contact ]
+ *
+ * Follow Icon8 on
+ *    Twitter [ https://twitter.com/icons_8 ]
+ *    Facebook [ https://www.facebook.com/Icons8 ]
+ *    Google+ [ https://plus.google.com/+Icons8 ]
+ *    GitHub [ https://github.com/icons8 ]
+ */
+
+
+@font-face {
+  font-family: "171b-4eb0-9136-95c4ae41553c";
+  src: url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.eot");
+  src: url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.woff2") format("woff2"),
+       url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.woff") format("woff"),
+       url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.ttf") format("truetype"),
+       url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.svg#171b-4eb0-9136-95c4ae41553c") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "171b-4eb0-9136-95c4ae41553c";
+    src: url("../fonts/171b-4eb0-9136-95c4ae41553c_3bf1809248d9ccced916187911e5f9bb.svg#171b-4eb0-9136-95c4ae41553c") format("svg");
+  }
+}
+
+[data-icons8]:before { content: attr(data-icons8); }
+
+[data-icons8]:before,
+.icons8-attention:before,
+.icons8-delete:before,
+.icons8-delete-2:before,
+.icons8-plus:before,
+.icons8-search:before,
+.icons8-trash:before {
+  display: inline-block;
+  font-family: "171b-4eb0-9136-95c4ae41553c";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icons8-attention:before { content: "\f100"; }
+.icons8-delete:before { content: "\f101"; }
+.icons8-delete-2:before { content: "\f102"; }
+.icons8-plus:before { content: "\f103"; }
+.icons8-search:before { content: "\f104"; }
+.icons8-trash:before { content: "\f105"; }

@@ -1,13 +1,15 @@
 /**
  * AlgoliaApp, simply creating its own scope
- * TODO: this could be done in other ways, and the add form stuff could be elsewhere
+ * TODO: this could be done in other ways, with separate modules (input form, add form, algolia related code)
  */
-const AlgoliaApp = (function(window) {
-    let document = window.document;
+const AlgoliaApp = (function() {
+    const resultsPerPage = 5;
 
     let searchClient = null;
     let index = null;
 
+    let msgContainer = null;
+    let msgContentEl = null;
     let searchInput = null;
     let addButton = null;
     let addForm = null;
@@ -16,19 +18,26 @@ const AlgoliaApp = (function(window) {
     let resultTemplateContent = null;
 
     function initApp(config) {
-        initSearchClient(config);
-
         initElements();
+
+        initSearchClient(config);
 
         initEvents();
     }
 
     function initSearchClient(config) {
-        searchClient = algoliasearch(config.algolia_applicationID, config.algolia_apiKey);
-        index = searchClient.initIndex(config.algolia_indexName);
+        try {
+            searchClient = algoliasearch(config.algolia_applicationID, config.algolia_apiKey);
+            index = searchClient.initIndex(config.algolia_indexName);
+            enableApp();
+        } catch (err) {
+            updateMsg(err.name + ': ' + err.message, 'error');
+        }
     }
 
     function initElements() {
+        msgContainer = document.getElementById('msg');
+        msgContentEl = msgContainer.querySelector('.content');
         searchInput = document.getElementById('searchInput');
         addButton = document.getElementById('addButton');
         addForm = document.getElementById('addForm');
@@ -38,9 +47,15 @@ const AlgoliaApp = (function(window) {
     }
 
     function initEvents() {
+        // Message box hide button
+        msgContainer.querySelector('.hide').addEventListener('click', function (e) {
+            msgContainer.classList.add('hidden');
+        });
+
         // Click event on the delete buttons
         resultsEl.addEventListener('click', function (e) {
-            if (e.target.type === 'button' && e.target.classList.contains('delete')) {
+            // Not sure this is the best way to do this
+            if (e.target.dataset.deleteEntity === 'true') {
                 const objectID = e.target.parentElement.dataset.id;
                 deleteEntity(objectID);
 
@@ -59,7 +74,7 @@ const AlgoliaApp = (function(window) {
                 // the last optional argument can be used to add search parameters
                 index.search(
                     toSearch, {
-                        hitsPerPage: 5,
+                        hitsPerPage: resultsPerPage,
                         facets: '*',
                         maxValuesPerFacet: 10
                     },
@@ -103,15 +118,21 @@ const AlgoliaApp = (function(window) {
 
                 hideAddForm();
             }).catch(function (error) {
-                alert(error);
-                console.error(error);
+                updateMsg(error, 'error');
             });
         });
     }
 
+    function enableApp() {
+        searchInput.disabled = false;
+        addButton.disabled = false;
+    }
+
     function showAddForm() {
-        addForm.classList.remove('hidden');
-        addFormTextarea.select();
+        if (!addButton.disabled) {
+            addForm.classList.remove('hidden');
+            addFormTextarea.select();
+        }
     }
 
     function hideAddForm() {
@@ -125,6 +146,30 @@ const AlgoliaApp = (function(window) {
         }
     }
 
+    function updateMsg(msg, type) {
+        const types = [
+            'info',
+            // 'warning',
+            'error',
+        ];
+
+        if (types.indexOf(type) === -1) {
+            type = types[0];
+        }
+
+        // Removing obsolete classes
+        for (let i = 0; i < types.length; i++) {
+            if (type !== types[i] && msgContainer.classList.contains(types[i])) {
+                msgContainer.classList.remove(types[i]);
+            }
+        }
+
+        msgContentEl.innerText = msg;
+        msgContainer.classList.add(type);
+        msgContainer.classList.remove('hidden');
+        console[type](msg);
+    }
+
     function createResultRow(content) {
         let mainEl = resultTemplateContent.querySelector('.result');
         let nameEl = resultTemplateContent.querySelector('.name');
@@ -132,19 +177,18 @@ const AlgoliaApp = (function(window) {
 
         mainEl.dataset.id = content.objectID;
 
-        // may contain em tags for highlights
+        // name and category may contain em tags for highlights and escaped chars
         nameEl.innerHTML = content._highlightResult.name.value;
         nameEl.href = content.link;
 
-        // may contain escaped chars
-        categoryEl.innerHTML = content.category;
+        categoryEl.innerHTML = content._highlightResult.category.value;
 
         return document.importNode(resultTemplateContent, true);
     }
 
     function searchCallback(err, content) {
         if (err) {
-            console.error(err);
+            updateMsg(error, 'error');
             return;
         } else {
             removeAllChildren(resultsEl);
@@ -191,4 +235,4 @@ const AlgoliaApp = (function(window) {
             initApp(config);
         }
     };
-}(window));
+}());
