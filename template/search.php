@@ -15,7 +15,7 @@
                 App store search engine
             </h1>
             <span class="copyright">
-                Engine powered by <a href="https://www.algolia.com">Algolia</a>, Icons by <a href="https://icons8.com">Icons8</a>
+                Engine powered by <a href="https://www.algolia.com">Algolia</a>, Icons by <a href="https://icons8.com">Icons8</a>, <a href="https://github.com/Chonne/algolia-mvc" title="See the code on GitHub">fork this</a>
             </span>
         </header>
 

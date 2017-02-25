@@ -11,7 +11,6 @@
 - add keyboard navigation for the results
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?
-- add extra info on the page, such as a link to this github, to Algolia's website, and to whatever else comes to mind
 
 ## Install instructions
 
