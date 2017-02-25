@@ -136,6 +136,7 @@ const AlgoliaApp = (function() {
 
     function hideMsg() {
         msgContainer.classList.add('hidden');
+        msgContentEl.innerText = '';
     }
 
     function removeAllChildren(parent) {

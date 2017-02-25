@@ -72,8 +72,8 @@ body > header > .copyright a:hover {
 	padding: 5px 5px 5px 10px;
 	border: 1px solid ;
 	border-width: 1px 10px;
-	background: rgb(255, 254, 190);
-	border-color: rgb(178, 177, 63);
+	background: rgb(200, 227, 192);
+	border-color: rgb(109, 175, 88);
 }
 
 #msg.hidden {
@@ -92,14 +92,14 @@ body > header > .copyright a:hover {
 }
 
 #msg .hide {
-	border: 2px solid rgb(178, 177, 63);
+	border: 2px solid rgb(109, 175, 88);
 	border-radius: 12px;
 	height: 24px;
 	line-height: 16px;
 	width: 24px;
 	background: transparent;
 	padding: 0;
-	color: rgb(178, 177, 63);
+	color: rgb(109, 175, 88);
 }
 
 #msg.error .hide {
