@@ -30,14 +30,17 @@ class Controller
 
     public function runAddEntity()
     {
-        if (empty($_POST['data'])) {
-            throw new \Exception('Data is missing', 400);
-        }
-
-        // TODO: check if json_decode didn't throw an error
-        $data = json_decode($_POST['data'], true);
-
         try {
+            if (empty($_POST['data'])) {
+                throw new \Exception('Data is missing');
+            }
+
+            $data = json_decode($_POST['data'], true);
+
+            if (empty($data)) {
+                throw new \Exception('Failed to decode data: ' . json_last_error_msg());
+            }
+
             $newApp = $this->model->create('App', $data);
 
             http_response_code(201);
