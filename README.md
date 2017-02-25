@@ -1,5 +1,7 @@
 # Algolia MVC example
 
+This is a sample app including an autocomplete input and a simple form to add entities to an Algolia index. The PHP backend takes care of adding and removing entities.
+
 ## To do
 
 ### backend
