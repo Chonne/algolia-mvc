@@ -4,6 +4,7 @@
  */
 const AlgoliaApp = (function() {
     const resultsPerPage = 5;
+    let msgTimeout = null;
 
     let searchClient = null;
     let index = null;
@@ -54,12 +55,14 @@ const AlgoliaApp = (function() {
 
         // Click event on the delete buttons
         resultsEl.addEventListener('click', function (e) {
-            // Not sure this is the best way to do this
-            if (e.target.dataset.deleteEntity === 'true') {
+            if (e.target.type === 'button' && e.target.classList.contains('delete')) {
+                // TODO: make sure this works wherever the parent containing the
+                // id is
                 const objectID = e.target.parentElement.dataset.id;
-                deleteEntity(objectID);
 
-                // TODO: add some kind of animation and remove the node
+                // TODO: add some css animation to make it fade away
+                // TODO: move this anonymous function somewhere else
+                deleteEntity(objectID, function () {e.target.parentElement.remove();});
             }
         });
 
@@ -68,19 +71,7 @@ const AlgoliaApp = (function() {
             const toSearch = this.value;
             e.stopPropagation();
 
-            if (toSearch === '') {
-                removeAllChildren(resultsEl);
-            } else {
-                // the last optional argument can be used to add search parameters
-                index.search(
-                    toSearch, {
-                        hitsPerPage: resultsPerPage,
-                        facets: '*',
-                        maxValuesPerFacet: 10
-                    },
-                    searchCallback
-                );
-            }
+            executeSearch(toSearch);
         });
 
         // TODO: do something better, this is only to test
@@ -114,9 +105,12 @@ const AlgoliaApp = (function() {
                     return response.text().then(function (response) {
                         throw response;
                     });
+                } else {
+                    return response.text().then(function (response) {
+                        hideAddForm();
+                        updateMsg('Entity added (id: ' + response + ')', 'info');
+                    });
                 }
-
-                hideAddForm();
             }).catch(function (error) {
                 updateMsg(error, 'error');
             });
@@ -140,18 +134,23 @@ const AlgoliaApp = (function() {
         addForm.reset();
     }
 
+    function hideMsg() {
+        msgContainer.classList.add('hidden');
+    }
+
     function removeAllChildren(parent) {
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
     }
 
-    function updateMsg(msg, type) {
+    function updateMsg(argMsg, type) {
         const types = [
             'info',
             // 'warning',
             'error',
         ];
+        const msg = argMsg.toString();
 
         if (types.indexOf(type) === -1) {
             type = types[0];
@@ -168,6 +167,16 @@ const AlgoliaApp = (function() {
         msgContainer.classList.add(type);
         msgContainer.classList.remove('hidden');
         console[type](msg);
+
+        // Hide the message after a few seconds if it's only informational
+        if (type === 'info') {
+            clearTimeout(msgTimeout);
+            msgTimeout = setTimeout(function () {
+                // TODO: css animation to make it fade away
+                // TODO: cancel timeout if the user hovered the message?
+                msgContainer.classList.add('hidden');
+            }, 5000);
+        }
     }
 
     function createResultRow(content) {
@@ -186,6 +195,23 @@ const AlgoliaApp = (function() {
         return document.importNode(resultTemplateContent, true);
     }
 
+    // TODO: use promises instead of callbacks, this isn't great
+    function executeSearch(toSearch) {
+        if (toSearch === '') {
+            removeAllChildren(resultsEl);
+        } else {
+            // the last optional argument can be used to add search parameters
+            index.search(
+                toSearch, {
+                    hitsPerPage: resultsPerPage,
+                    facets: '*',
+                    maxValuesPerFacet: 10
+                },
+                searchCallback
+            );
+        }
+    }
+
     function searchCallback(err, content) {
         if (err) {
             updateMsg(error, 'error');
@@ -199,19 +225,36 @@ const AlgoliaApp = (function() {
                 }
             }
         }
-
-        console.log(content);
     }
 
-    function deleteEntity(id, isConfirmed) {
+    /**
+     * @todo avoid mixing callback and promises
+     * @param  {string|integer}   id
+     * @param  {Function} callback
+     * @param  {Boolean}  isConfirmed
+     */
+    function deleteEntity(id, callback, isConfirmed) {
+        // just making sure it's a string for concatenations
+        const idAsStr = id.toString();
+        callback = callback || function() {};
+
         // TODO: perhaps this confirmation thing could be done otherwise?
         if (isConfirmed === undefined) {
-            deleteEntity(id, window.confirm('Are you sure you want to delete this object?'));
+            deleteEntity(id, callback, window.confirm('Are you sure you want to delete this object?'));
         } else if(isConfirmed) {
             // TODO: id is already a string, is this needed?
-            fetch('/api/1/apps/' + id.toString(), {method: 'DELETE'})
+            fetch('/api/1/apps/' + idAsStr, {method: 'DELETE'})
             .then(function (response) {
-                console.log(response);
+                if (!response.ok) {
+                    return response.text().then(function (response) {
+                        throw response;
+                    });
+                }
+
+                updateMsg('Entity deleted (id: ' + idAsStr + ')');
+                callback(id);
+            }).catch(function deleteEntityPromiseError(error) {
+                updateMsg('Could not delete entity: ' + error, 'error');
             });
         }
     }
@@ -231,7 +274,7 @@ const AlgoliaApp = (function() {
          * Initializes the "module"
          * @param  {object} config Configuration for the Algolia search client
          */
-        init: function(config) {
+        init: function (config) {
             initApp(config);
         }
     };

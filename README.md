@@ -8,9 +8,6 @@
 
 ### frontend
 
-- make it prettier
-- remove a result's row from the list after removing it
-- add message area for (usually successful) responses
 - add keyboard navigation for the results
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?

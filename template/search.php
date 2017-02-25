@@ -17,7 +17,7 @@
         <div id="app">
             <div id="msg" class="hidden">
                 <span class="content"></span>
-                <button type="button" class="hide"><i class="icons8-delete-2"></i></button>
+                <button type="button" class="hide" title="Close message"><i class="icons8-delete-2"></i></button>
             </div>
 
             <i class="icons8-search"></i>
@@ -31,7 +31,7 @@
                             <!-- <img src="" alt=""> -->
                             <a class="name" title="view on iTunes" href=""></a>
                             <span class="category"></span>
-                            <button type="button" title="Remove from index" class="delete" data-delete-entity="true"><i class="icons8-trash" data-delete-entity="true"></i></button>
+                            <button type="button" title="Remove from index" class="delete icons8-trash" data-delete-entity="true"></button>
                         </li>
                     </template>
                 </ul>
