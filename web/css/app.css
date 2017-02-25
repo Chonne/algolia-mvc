@@ -19,8 +19,33 @@ button {
 	cursor: not-allowed;
 }
 
+body > header {
+	display: flex;
+	padding-right: 5px;
+	border: 1px solid rgb(90, 183, 222);
+	border-width: 0 0 1px 5px;
+	color: rgb(90, 183, 222);
+	background: white;
+	align-items: center;
+}
+
+body > header > h1 {
+	flex: 1;
+	margin: 0;
+	padding: 5px 10px;
+	font-size: 1.2rem;
+}
+
+body > header > .copyright a {
+	text-decoration: none;
+}
+
+body > header > .copyright a:hover {
+	text-decoration: underline;
+}
+
 #app {
-	margin: 140px auto 0;
+	margin: 110px auto 0;
 	text-align: center;
 	width: 60%;
 	min-width: 700px;

@@ -10,9 +10,14 @@
     </head>
 
     <body>
-        <!-- <header>
-            Built with <a href="https://www.algolia.com">Algolia</a>
-        </header> -->
+        <header>
+            <h1>
+                App store search engine
+            </h1>
+            <span class="copyright">
+                Powered by <a href="https://www.algolia.com">Algolia</a>
+            </span>
+        </header>
 
         <div id="app">
             <div id="msg" class="hidden">
