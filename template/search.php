@@ -3,9 +3,9 @@
     <head>
         <title>Search with Algolia</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="/app.css">
+        <link rel="stylesheet" href="/css/app.css">
         <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-        <script src="./app.js"></script>
+        <script src="/js/app.js"></script>
         <!-- TODO: add polyfill for fetch -->
     </head>
 
