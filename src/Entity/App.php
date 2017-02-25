@@ -39,7 +39,7 @@ class App
     public function setName($name)
     {
         if (empty($name)) {
-            throw new \Exception('Name is required');
+            throw new \Exception('Name is required and cannot be empty');
         }
 
         $this->name = $name;
@@ -67,7 +67,7 @@ class App
     public function setImage($image)
     {
         if (empty($image)) {
-            throw new \Exception('Image is required');
+            throw new \Exception('Image is required and cannot be empty');
         }
 
         $this->image = $image;
@@ -95,7 +95,7 @@ class App
     public function setLink($link)
     {
         if (empty($link)) {
-            throw new \Exception('Link is required');
+            throw new \Exception('Link is required and cannot be empty');
         }
 
         $this->link = $link;
@@ -123,7 +123,7 @@ class App
     public function setCategory($category)
     {
         if (empty($category)) {
-            throw new \Exception('Category is required');
+            throw new \Exception('Category is required and cannot be empty');
         }
 
         $this->category = $category;
@@ -151,7 +151,7 @@ class App
     public function setRank($rank)
     {
         if (empty($rank)) {
-            throw new \Exception('Rank is required');
+            throw new \Exception('Rank is required and cannot be empty');
         }
 
         $this->rank = $rank;
