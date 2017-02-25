@@ -74,7 +74,6 @@ const AlgoliaApp = (function() {
             executeSearch(toSearch);
         });
 
-        // TODO: do something better, this is only to test
         addButton.addEventListener('click', showAddForm);
 
         document.addEventListener('keyup', function (e) {
@@ -120,6 +119,8 @@ const AlgoliaApp = (function() {
     function enableApp() {
         searchInput.disabled = false;
         addButton.disabled = false;
+
+        searchInput.select();
     }
 
     function showAddForm() {
