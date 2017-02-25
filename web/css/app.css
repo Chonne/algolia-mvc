@@ -136,14 +136,15 @@ body > header > .copyright a:hover {
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	background: white;
 }
 
 #results .result {
+	background: white;
 	border: 1px solid #ddd;
 	border-width: 1px 1px 0;
-	padding: 5px;
+	padding: 5px 38px 5px 5px;
 	min-height: 27px;
+	position: relative;
 }
 
 #results .result:hover, #results .result:active, #results .result:focus {
@@ -152,6 +153,7 @@ body > header > .copyright a:hover {
 
 #results .result:last-of-type {
 	border-bottom-width: 1px;
+	border-radius: 0 0 5px 5px;
 }
 
 #results .result .name {
@@ -161,6 +163,11 @@ body > header > .copyright a:hover {
 #results em {
 	background-color: rgba(0, 174, 255, 0.3);
 	font-style: normal;
+}
+
+#results .category {
+	display: block;
+	padding-top: 2px;
 }
 
 #results .category, #results .category em {
@@ -176,8 +183,10 @@ body > header > .copyright a:hover {
 	background: white;
 	font-weight: bold;
 	outline: none;
-	float: right;
 	padding: 0;
+	right: 5px;
+	position: absolute;
+	top: 5px;
 }
 
 #results .result > .delete:hover {
