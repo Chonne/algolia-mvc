@@ -36,6 +36,10 @@ body > header > h1 {
 	font-size: 1.2rem;
 }
 
+body > header > .copyright {
+	font-size: 0.8rem;
+}
+
 body > header > .copyright a {
 	text-decoration: none;
 }
