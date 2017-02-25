@@ -13,6 +13,7 @@ This is a sample app including an autocomplete input and a simple form to add en
 - add keyboard navigation for the results
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?
+- show the total number of results? Would be helpful when there aren't any, but not only
 
 ## Install instructions
 
