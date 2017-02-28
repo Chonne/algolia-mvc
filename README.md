@@ -10,6 +10,7 @@ This is a sample app including an autocomplete input and a simple form to add en
 
 ### frontend
 
+- include fetch polyfill using npm?
 - add keyboard navigation for the results
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?
