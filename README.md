@@ -2,11 +2,13 @@
 
 This is a sample app including an autocomplete input and a simple form to add entities to an Algolia index. The PHP backend takes care of adding and removing entities.
 
+**This was done for a recruitment test, which I've failed, mainly because of the backend architecture's not being "MVC" enough. This is because of my lack of knowledge in software architecture in general.**
+
 ## To do
 
 ### backend
 
-- put the view stuff in a Response class? It'll basically take care of setting the http response code and echoing a string or requiring a template with params, so I'm not sure it's necessary. It would make the POC more "MVC" though.
+- put the view stuff in a Response class? It'll basically take care of setting the http response code and echoing a string or requiring a template with params, so I'm not sure it's necessary.
 
 ### frontend
 
