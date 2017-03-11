@@ -2,21 +2,45 @@
 
 This is a sample app including an autocomplete input and a simple form to add entities to an Algolia index. The PHP backend takes care of adding and removing entities.
 
-**This was done for a recruitment test, which I've failed, mainly because of the backend architecture's not being "MVC" enough. This is because of my lack of knowledge in software architecture in general.**
+This was done for a recruitment test, which I've failed, mainly because of the backend architecture's not being "MVC" enough. The version submitted was 1.0.0. Time spent: 17h.
+
+Most of the issues will be fixed, just for the sake of doing it properly. No libs will be used, unless really needed (eg phpunit). This will still be a POC and isn't meant to be used in production. If that had been the case, I would've used existing libraries and a basic framework such as Silex (no need to reinvent the wheel).
 
 ## To do
 
+### general
+
+- include requirements in readme and composer (php version)
+- remove useless todo comments in code
+- document the Rest API (RAML? Swagger?)
+- create a docker container with the code?
+
 ### backend
 
-- put the view stuff in a Response class? It'll basically take care of setting the http response code and echoing a string or requiring a template with params, so I'm not sure it's necessary.
+- allow multiple controllers, as initially planned
+- divide controller in 2 parts: 1 for the main page, the other for the api
+- entity handling should be done by the controller. Model will be a bit like doctrine's repositories or entity manager
+- entity: check that $data keys exist before trying to access them
+- better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
+- validate json with schemas? Will require using an external lib
+- define routes in a separate file, which will be passed to Application, perhaps as a Router class (especially if it's expected to be tested)
+- define dependencies and their injections in a separate file (eg Model expects an instance of the search client, the controller shouldn't have to know that)
+- build a Request class that will be passed to the controller and will prepare the parameters
+- build a Response class that will be sent back by the controller and will take care of headers and displaying the response. ob_* functions will be used by a template engine (?) to store the templates' results
+- use a config parameter with the site's base url to allow usage in a subdirectory
+- support a debug mode (set in the config), which would return more details in case of errors
 
 ### frontend
 
-- include fetch polyfill using npm?
 - add keyboard navigation for the results
+- include fetch polyfill using npm?
+- if more libs are used, perhaps use something like gulp to build stuff
+- use scss?
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
 - results: display more than 5?
 - show the total number of results? Would be helpful when there aren't any, but not only
+- divide the js code into separate modules
+- use babel and newer javascript?
 
 ## Install instructions
 
