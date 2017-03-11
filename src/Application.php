@@ -29,11 +29,6 @@ class Application
      */
     private $controller;
 
-    /**
-     * @var string
-     */
-    private $templatePath;
-
     private $routes = [
         '/^\/$/' => [
             'http_method' => 'GET',
