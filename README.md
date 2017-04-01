@@ -2,38 +2,15 @@
 
 This is a sample app including an autocomplete input and a simple form to add entities to an Algolia index. The PHP backend takes care of adding and removing entities.
 
-This was done for a recruitment test, which I've failed, mainly because of the backend architecture's not being "MVC" enough. The version submitted was 1.0.0. Time spent: 17h.
+This was done for a recruitment test, which I've failed, mainly because of the backend architecture's not being "MVC" enough and because it couldn't be easily tested (eg lousy dependency injection). The version submitted was 1.0.0. Time spent: 17h.
 
 Most of the issues will be fixed, just for the sake of doing it properly. No libs will be used, unless really needed (eg phpunit). This will still be a POC and isn't meant to be used in production. If that had been the case, I would've used existing libraries and a basic framework such as Silex (no need to reinvent the wheel).
 
-## To do
+## Requirements
 
-### general
-
-- document the Rest API (RAML? Swagger?)
-- create a docker container with the code?
-
-### backend
-
-- get rid alltogether of the Entity\App class?
-- better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
-- validate json with schemas? Will require using an external lib
-- use a Router class?
-- build a Request class that will be passed to the controller and will prepare the parameters
-- use a config parameter with the site's base url to allow usage in a subdirectory
-- in debug mode: return more details in case of errors
-
-### frontend
-
-- add keyboard navigation for the results
-- include fetch polyfill using npm?
-- if more libs are used, perhaps use something like gulp to build stuff
-- use scss?
-- close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
-- results: display more than 5?
-- show the total number of results? Would be helpful when there aren't any, but not only
-- divide the js code into separate modules
-- use babel and newer javascript?
+- [Composer](https://getcomposer.org/download/)
+- php >= 5.4
+- Web server with rewrite capabilities
 
 ## Install instructions
 
@@ -77,18 +54,8 @@ Apache virtualhost configuration example, highly inspired by Symfony's default h
                 Options Indexes FollowSymLinks
                 Require all granted
 
-                # Contents copied from the main .htaccess and adapted
+                # Contents copied from Symfony 2's main .htaccess and adapted
                 RewriteEngine on
-
-                # Determine the RewriteBase automatically and set it as environment variable.
-                # If you are using Apache aliases to do mass virtual hosting or installed the
-                # project in a subdirectory, the base path will be prepended to allow proper
-                # resolution of the app.php file and to redirect to the correct URI. It will
-                # work in environments without path prefix as well, providing a safe, one-size
-                # fits all solution. But as you do not need it in this case, you can comment
-                # the following 2 lines to eliminate the overhead.
-                RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
-                RewriteRule ^(.*) - [E=BASE:%1]
 
                 # Sets the HTTP_AUTHORIZATION header removed by apache
                 RewriteCond %{HTTP:Authorization} .
@@ -166,8 +133,33 @@ To access the container as www-data and run local commands such as `php composer
 
 `docker exec --user www-data -i -t containers_php-apache_1 /bin/bash`
 
-## Requirements
+## To do
 
-- [Composer](https://getcomposer.org/download/)
-- php >= 5.4
-- Web server with rewrite capabilities
+These are ideas I've had to improve the project, that either should've been done for the test itself or as general improvements because I tend to be a perfectionist.
+
+### general
+
+- document the Rest API (RAML? Swagger?)
+- create a docker container with the code?
+
+### backend
+
+- get rid alltogether of the Entity\App class?
+- better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
+- validate json with schemas? Will require using an external lib
+- use a Router class?
+- build a Request class that will be passed to the controller and will prepare the parameters
+- use a config parameter with the site's base url to allow usage in a subdirectory
+- in debug mode: return more details in case of errors
+
+### frontend
+
+- add keyboard navigation for the results
+- include fetch polyfill using npm?
+- if more libs are used, perhaps use something like gulp to build stuff
+- use scss?
+- close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
+- results: display more than 5?
+- show the total number of results? Would be helpful when there aren't any, but not only
+- divide the js code into separate modules
+- use babel and newer javascript?
