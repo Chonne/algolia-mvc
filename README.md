@@ -20,7 +20,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 - validate json with schemas? Will require using an external lib
 - use a Router class?
 - build a Request class that will be passed to the controller and will prepare the parameters
-- build a Response class that will be sent back by the controller and will take care of headers and displaying the response. ob_* functions will be used by a template engine (?) to store the templates' results
 - use a config parameter with the site's base url to allow usage in a subdirectory
 - in debug mode: return more details in case of errors
 

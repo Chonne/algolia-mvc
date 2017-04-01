@@ -22,9 +22,9 @@ class ApiController extends Controller
             $newApp = new AppEntity($data); // useful only for data validation
             $objectId = $this->model->createInIndex($newApp);
 
-            http_response_code(201);
+            $this->response->setResponseCode(201);
 
-            echo $objectId;
+            $this->response->render($objectId);
         } catch (\Exception $e) {
             throw new \Exception('Entity could not be created: ' . $e->getMessage(), 400, $e);
         }
@@ -37,8 +37,5 @@ class ApiController extends Controller
     public function runDeleteEntity($id)
     {
         $this->model->delete($id);
-
-        // Not necessary as it's the code by default
-        http_response_code(200);
     }
 }

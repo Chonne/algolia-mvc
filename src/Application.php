@@ -65,30 +65,8 @@ class Application
                 throw new \Exception('Unknown action: ' . $this->action, 404);
             }
         } catch (\Exception $e) {
-            $this->renderError($e->getCode(), $e->getMessage());
+            (new Response())->renderError($e->getCode(), $e->getMessage());
         }
-    }
-
-    /**
-     * Display the error message, with the appropriate HTTP response code
-     * @param  int $code
-     * @param  string $message
-     */
-    private function renderError($code = 500, $message = 'An error has occurred')
-    {
-        $expectedCodes = [
-            400,
-            404,
-            500,
-        ];
-
-        if (!in_array($code, $expectedCodes)) {
-            $code = 500;
-        }
-
-        http_response_code($code);
-
-        echo $message;
     }
 
     /**
@@ -118,8 +96,17 @@ class Application
         $this->action = $action;
         $this->actionParams = $actionParams;
         $this->route = $route;
+        $this->startController($controller);
+    }
+
+    private function startController($controller)
+    {
         // todo: check the existence of $controller and validity of $controller->$action()
-        $this->controller = new $controller($this->config, new Model($this->initSearchIndex($this->config['parameters']['algolia'])));
+        $this->controller = new $controller(
+            $this->config,
+            new Response($this->config),
+            new Model($this->initSearchIndex($this->config['parameters']['algolia']))
+        );
     }
 
     /**
