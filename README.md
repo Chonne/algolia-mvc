@@ -19,7 +19,7 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 - entity handling should be done by the controller. Model will be a bit like doctrine's repositories or entity manager
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
-- define routes in a separate file, which will be passed to Application, perhaps as a Router class (especially if it's expected to be tested)
+- use a Router class?
 - inject dependencies instead of instanciating objects in constructors
 - build a Request class that will be passed to the controller and will prepare the parameters
 - build a Response class that will be sent back by the controller and will take care of headers and displaying the response. ob_* functions will be used by a template engine (?) to store the templates' results

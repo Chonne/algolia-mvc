@@ -29,31 +29,19 @@ class Application
      */
     private $controller;
 
-    private $routes = [
-        '/^\/$/' => [
-            'http_method' => 'GET',
-            'controller' => 'AlgoliaApp\Controller',
-            'action' => 'runHome',
-        ],
-        '/^\/api\/1\/apps$/' => [
-            'http_method' => 'POST',
-            'controller' => 'AlgoliaApp\Controller',
-            'action' => 'runAddEntity',
-        ],
-        '/^\/api\/1\/apps\/(\d+)$/' => [
-            'http_method' => 'DELETE',
-            'controller' => 'AlgoliaApp\Controller',
-            'action' => 'runDeleteEntity',
-        ],
-    ];
+    /**
+     * @var array
+     */
+    private $routes;
 
     /**
      *
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config, array $routes)
     {
         $this->config = $config;
+        $this->routes = $routes;
     }
 
     /**
