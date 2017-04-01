@@ -11,7 +11,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 ### general
 
 - include requirements in readme and composer (php version)
-- remove useless todo comments in code
 - document the Rest API (RAML? Swagger?)
 - create a docker container with the code?
 

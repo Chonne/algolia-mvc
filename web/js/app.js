@@ -197,7 +197,7 @@ const AlgoliaApp = (function() {
         return document.importNode(resultTemplateContent, true);
     }
 
-    // TODO: use promises instead of callbacks, this isn't great
+    // TODO: use promises instead of callbacks
     function executeSearch(toSearch) {
         if (toSearch === '') {
             removeAllChildren(resultsEl);
@@ -230,7 +230,6 @@ const AlgoliaApp = (function() {
     }
 
     /**
-     * @todo avoid mixing callback and promises
      * @param  {string|integer}   id
      * @param  {Function} callback
      * @param  {Boolean}  isConfirmed
@@ -240,11 +239,9 @@ const AlgoliaApp = (function() {
         const idAsStr = id.toString();
         callback = callback || function() {};
 
-        // TODO: perhaps this confirmation thing could be done otherwise?
         if (isConfirmed === undefined) {
             deleteEntity(id, callback, window.confirm('Are you sure you want to delete this object?'));
         } else if(isConfirmed) {
-            // TODO: id is already a string, is this needed?
             fetch('/api/1/apps/' + idAsStr, {method: 'DELETE'})
             .then(function (response) {
                 if (!response.ok) {
