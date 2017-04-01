@@ -4,6 +4,21 @@ namespace AlgoliaApp\Entity;
 
 class App
 {
+    /**
+     * List of fields with the corresponding setter methods. They are all
+     * required. If something more evolved and automatic ever needs to be used
+     * for setters, use ucwords() or some lib that will transform field names
+     * into camelcase
+     * @var array
+     */
+    private $fields = [
+        'name' => 'setName',
+        'image' => 'setImage',
+        'link' => 'setLink',
+        'category' => 'setCategory',
+        'rank' => 'setRank',
+    ];
+
     private $name;
     private $image;
     private $link;
@@ -13,12 +28,15 @@ class App
 
     public function __construct(array $data)
     {
-        $this->setName($data['name']);
-        $this->setImage($data['image']);
-        $this->setLink($data['link']);
-        $this->setCategory($data['category']);
-        $this->setRank($data['rank']);
+        foreach ($this->fields as $key => $method) {
+            if (!array_key_exists($key, $data)) {
+                throw new \Exception('Key is required but was not found: ' . $key);
+            }
+
+            $this->$method($data[$key]);
+        }
     }
+
     /**
      * Gets the value of name.
      *
@@ -39,7 +57,7 @@ class App
     public function setName($name)
     {
         if (empty($name)) {
-            throw new \Exception('Name is required and cannot be empty');
+            throw new \Exception('Name cannot be empty');
         }
 
         $this->name = $name;
@@ -67,7 +85,7 @@ class App
     public function setImage($image)
     {
         if (empty($image)) {
-            throw new \Exception('Image is required and cannot be empty');
+            throw new \Exception('Image cannot be empty');
         }
 
         $this->image = $image;
@@ -95,7 +113,7 @@ class App
     public function setLink($link)
     {
         if (empty($link)) {
-            throw new \Exception('Link is required and cannot be empty');
+            throw new \Exception('Link cannot be empty');
         }
 
         $this->link = $link;
@@ -123,7 +141,7 @@ class App
     public function setCategory($category)
     {
         if (empty($category)) {
-            throw new \Exception('Category is required and cannot be empty');
+            throw new \Exception('Category cannot be empty');
         }
 
         $this->category = $category;
@@ -151,7 +169,7 @@ class App
     public function setRank($rank)
     {
         if (empty($rank)) {
-            throw new \Exception('Rank is required and cannot be empty');
+            throw new \Exception('Rank cannot be empty');
         }
 
         $this->rank = $rank;
