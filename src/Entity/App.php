@@ -30,7 +30,7 @@ class App implements EntityInterface
     {
         foreach ($this->fields as $key => $method) {
             if (!array_key_exists($key, $data)) {
-                throw new \Exception('Key is required but was not found: ' . $key);
+                throw new \InvalidArgumentException('Key is required but was not found: ' . $key);
             }
 
             $this->$method($data[$key]);
@@ -70,7 +70,7 @@ class App implements EntityInterface
     public function setName($name)
     {
         if (empty($name)) {
-            throw new \Exception('Name cannot be empty');
+            throw new \InvalidArgumentException('Name cannot be empty');
         }
 
         $this->name = $name;
@@ -98,7 +98,7 @@ class App implements EntityInterface
     public function setImage($image)
     {
         if (empty($image)) {
-            throw new \Exception('Image cannot be empty');
+            throw new \InvalidArgumentException('Image cannot be empty');
         }
 
         $this->image = $image;
@@ -126,7 +126,7 @@ class App implements EntityInterface
     public function setLink($link)
     {
         if (empty($link)) {
-            throw new \Exception('Link cannot be empty');
+            throw new \InvalidArgumentException('Link cannot be empty');
         }
 
         $this->link = $link;
@@ -154,7 +154,7 @@ class App implements EntityInterface
     public function setCategory($category)
     {
         if (empty($category)) {
-            throw new \Exception('Category cannot be empty');
+            throw new \InvalidArgumentException('Category cannot be empty');
         }
 
         $this->category = $category;
@@ -182,7 +182,7 @@ class App implements EntityInterface
     public function setRank($rank)
     {
         if (empty($rank)) {
-            throw new \Exception('Rank cannot be empty');
+            throw new \InvalidArgumentException('Rank cannot be empty');
         }
 
         $this->rank = $rank;
