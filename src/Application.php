@@ -32,14 +32,17 @@ class Application
     private $routes = [
         '/^\/$/' => [
             'http_method' => 'GET',
+            'controller' => 'AlgoliaApp\Controller',
             'action' => 'runHome',
         ],
         '/^\/api\/1\/apps$/' => [
             'http_method' => 'POST',
+            'controller' => 'AlgoliaApp\Controller',
             'action' => 'runAddEntity',
         ],
         '/^\/api\/1\/apps\/(\d+)$/' => [
             'http_method' => 'DELETE',
+            'controller' => 'AlgoliaApp\Controller',
             'action' => 'runDeleteEntity',
         ],
     ];
@@ -51,7 +54,6 @@ class Application
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->controller = new Controller($config);
     }
 
     /**
@@ -116,7 +118,7 @@ class Application
             }
         }
 
-        list($action, $actionParams) = $this->getRouteAction($route, $_SERVER['REQUEST_METHOD']);
+        list($controller, $action, $actionParams) = $this->getRouteAction($route, $_SERVER['REQUEST_METHOD']);
 
         if (empty($action)) {
             throw new \Exception('Unknown route: "' . $route . '" for method "' . $_SERVER['REQUEST_METHOD'] . '"', 404);
@@ -125,6 +127,8 @@ class Application
         $this->action = $action;
         $this->actionParams = $actionParams;
         $this->route = $route;
+        // todo: check the existence of $controller and validity of $controller->$action()
+        $this->controller = new $controller($this->config);
     }
 
     /**
@@ -135,20 +139,24 @@ class Application
      */
     private function getRouteAction($route, $method)
     {
+        $controller = '';
         $action = '';
         $actionParams = [];
 
         foreach ($this->routes as $authRoutePattern => $authRoute) {
             if ($method === $authRoute['http_method'] && preg_match($authRoutePattern, $route, $matches) === 1) {
+                $controller = $authRoute['controller'];
                 $action = $authRoute['action'];
+
                 if (count($matches) > 1) {
                     array_shift($matches);
                     $actionParams = $matches;
                 }
+
                 break;
             }
         }
 
-        return [$action, $actionParams];
+        return [$controller, $action, $actionParams];
     }
 }

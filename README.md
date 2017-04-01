@@ -16,7 +16,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 ### backend
 
-- allow multiple controllers, as initially planned
 - divide controller in 2 parts: 1 for the main page, the other for the api
 - entity handling should be done by the controller. Model will be a bit like doctrine's repositories or entity manager
 - entity: check that $data keys exist before trying to access them
