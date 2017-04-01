@@ -15,7 +15,7 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 ### backend
 
-- entity handling should be done by the controller. Model will be a bit like doctrine's repositories or entity manager
+- get rid alltogether of the Entity\App class?
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
 - use a Router class?

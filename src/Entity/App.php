@@ -2,7 +2,7 @@
 
 namespace AlgoliaApp\Entity;
 
-class App
+class App implements EntityInterface
 {
     /**
      * List of fields with the corresponding setter methods. They are all
@@ -35,6 +35,19 @@ class App
 
             $this->$method($data[$key]);
         }
+    }
+
+    public function getAllData()
+    {
+        $data = [
+            'name' => $this->getName(),
+            'image' => $this->getImage(),
+            'link' => $this->getLink(),
+            'category' => $this->getCategory(),
+            'rank' => $this->getRank(),
+        ];
+
+        return $data;
     }
 
     /**

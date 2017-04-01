@@ -2,6 +2,8 @@
 
 namespace AlgoliaApp\Controller;
 
+use AlgoliaApp\Entity\App as AppEntity;
+
 class ApiController extends Controller
 {
     public function runAddEntity()
@@ -17,11 +19,12 @@ class ApiController extends Controller
                 throw new \Exception('Failed to decode data: ' . json_last_error_msg());
             }
 
-            $newApp = $this->model->create('App', $data);
+            $newApp = new AppEntity($data); // useful only for data validation
+            $objectId = $this->model->createInIndex($newApp);
 
             http_response_code(201);
 
-            echo $newApp->getObjectId();
+            echo $objectId;
         } catch (\Exception $e) {
             throw new \Exception('Entity could not be created: ' . $e->getMessage(), 400, $e);
         }

@@ -3,6 +3,7 @@
 namespace AlgoliaApp;
 
 use AlgoliaSearch\Index;
+use AlgoliaApp\Entity\EntityInterface;
 
 class Model
 {
@@ -18,21 +19,14 @@ class Model
 
     /**
      * Creates an index with the data provided
-     * @param  string $type Name of the entity's class (without "Entity")
-     * @param  array  $data Data passed to the entity's constructor
-     * @return mixed       Instanciated entity
+     * @param  mixed $entity An instance of an entity
+     * @return int Object ID as set by the search indexer
      */
-    public function create($type, array $data)
+    public function createInIndex(EntityInterface $entity)
     {
-        $className = 'AlgoliaApp\\Entity\\' . $type;
+        $newEntityFromIndexer = $this->index->addObject($entity->getAllData());
 
-        $entity = new $className($data);
-
-        $newEntityFromIndexer = $this->index->addObject($data);
-
-        $entity->setObjectId($newEntityFromIndexer['objectID']);
-
-        return $entity;
+        return $newEntityFromIndexer['objectID'];
     }
 
     /**
