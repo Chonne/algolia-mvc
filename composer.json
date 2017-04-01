@@ -1,5 +1,6 @@
 {
     "require": {
+        "php": ">=5.4",
         "algolia/algoliasearch-client-php": "^1.14"
     },
     "autoload": {

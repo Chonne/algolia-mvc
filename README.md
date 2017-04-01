@@ -10,7 +10,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 ### general
 
-- include requirements in readme and composer (php version)
 - document the Rest API (RAML? Swagger?)
 - create a docker container with the code?
 
@@ -163,4 +162,5 @@ To access the container as www-data and run local commands such as `php composer
 ## Requirements
 
 - [Composer](https://getcomposer.org/download/)
+- php >= 5.4
 - Web server with rewrite capabilities
