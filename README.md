@@ -20,11 +20,11 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
 - define routes in a separate file, which will be passed to Application, perhaps as a Router class (especially if it's expected to be tested)
-- define dependencies and their injections in a separate file (eg Model expects an instance of the search client, the controller shouldn't have to know that)
+- inject dependencies instead of instanciating objects in constructors
 - build a Request class that will be passed to the controller and will prepare the parameters
 - build a Response class that will be sent back by the controller and will take care of headers and displaying the response. ob_* functions will be used by a template engine (?) to store the templates' results
 - use a config parameter with the site's base url to allow usage in a subdirectory
-- support a debug mode (set in the config), which would return more details in case of errors
+- in debug mode: return more details in case of errors
 
 ### frontend
 
@@ -40,8 +40,18 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 ## Install instructions
 
-- Launch `composer install`
-- Copy `config/parameters.php.dist` to `config/parameters.php` and add your Algolia credentials
+```
+# get composer
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+php composer.phar install
+
+# Add your Algolia credentials to the local config file `config/parameters.php`
+cp config/parameters.php.dist config/parameters.php
+
+```
 
 ### Server configuration examples
 
