@@ -13,6 +13,7 @@ $config = [
             'apiKey_admin' => '',
             'indexName' => '',
         ],
+        'debug' => false,
     ],
 ];
 
