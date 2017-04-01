@@ -2,18 +2,18 @@
 
 namespace AlgoliaApp;
 
-use AlgoliaSearch\Client;
+use AlgoliaSearch\Index;
 
 class Model
 {
     /**
      * @var array
      */
-    private $config;
+    private $index;
 
-    public function __construct(array $config)
+    public function __construct(Index $index)
     {
-        $this->config = $config;
+        $this->index = $index;
     }
 
     /**
@@ -28,9 +28,7 @@ class Model
 
         $entity = new $className($data);
 
-        $index = $this->initIndex();
-
-        $newEntityFromIndexer = $index->addObject($data);
+        $newEntityFromIndexer = $this->index->addObject($data);
 
         $entity->setObjectId($newEntityFromIndexer['objectID']);
 
@@ -43,25 +41,6 @@ class Model
      */
     public function delete($id)
     {
-        $index = $this->initIndex();
-
-        $index->deleteObject($id);
-    }
-
-    /**
-     * Initializes Algolia's index
-     * @todo execute this in the constructor?
-     * @return AlgoliaSearch\Index
-     */
-    private function initIndex()
-    {
-        $client = new Client(
-            $this->config['parameters']['algolia']['applicationID'],
-            $this->config['parameters']['algolia']['apiKey_admin']
-        );
-
-        $index = $client->initIndex($this->config['parameters']['algolia']['indexName']);
-
-        return $index;
+        $this->index->deleteObject($id);
     }
 }

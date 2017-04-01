@@ -20,7 +20,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
 - use a Router class?
-- inject dependencies instead of instanciating objects in constructors
 - build a Request class that will be passed to the controller and will prepare the parameters
 - build a Response class that will be sent back by the controller and will take care of headers and displaying the response. ob_* functions will be used by a template engine (?) to store the templates' results
 - use a config parameter with the site's base url to allow usage in a subdirectory

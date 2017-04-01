@@ -2,6 +2,9 @@
 
 namespace AlgoliaApp;
 
+use AlgoliaSearch\Client;
+use AlgoliaSearch\Index;
+
 class Application
 {
     /**
@@ -116,7 +119,7 @@ class Application
         $this->actionParams = $actionParams;
         $this->route = $route;
         // todo: check the existence of $controller and validity of $controller->$action()
-        $this->controller = new $controller($this->config);
+        $this->controller = new $controller($this->config, new Model($this->initSearchIndex($this->config['parameters']['algolia'])));
     }
 
     /**
@@ -146,5 +149,23 @@ class Application
         }
 
         return [$controller, $action, $actionParams];
+    }
+
+    /**
+     * Initializes Algolia's index
+     * @param array $indexParams
+     * @return Index
+     */
+    private function initSearchIndex(array $indexParams)
+    {
+        // todo: inject this in the constructor
+        $client = new Client(
+            $indexParams['applicationID'],
+            $indexParams['apiKey_admin']
+        );
+
+        $index = $client->initIndex($indexParams['indexName']);
+
+        return $index;
     }
 }

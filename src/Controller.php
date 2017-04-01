@@ -9,10 +9,10 @@ class Controller
 {
     private $config;
 
-    public function __construct(array $config)
+    public function __construct(array $config, Model $model)
     {
         $this->config = $config;
-        $this->model = new Model($config);
+        $this->model = $model;
     }
 
     public function runHome()
