@@ -1,33 +1,9 @@
 <?php
 
-namespace AlgoliaApp;
+namespace AlgoliaApp\Controller;
 
-use AlgoliaSearch\Client;
-use AlgoliaApp\Entity\App as AppEntity;
-
-class Controller
+class ApiController extends Controller
 {
-    private $config;
-
-    public function __construct(array $config, Model $model)
-    {
-        $this->config = $config;
-        $this->model = $model;
-    }
-
-    public function runHome()
-    {
-        $templatePath = $this->config['paths']['templates'] . '/' . 'search.php';
-
-        $templateParams = [
-            'algolia_applicationID' => $this->config['parameters']['algolia']['applicationID'],
-            'algolia_apiKey' => $this->config['parameters']['algolia']['apiKey_search'],
-            'algolia_indexName' => $this->config['parameters']['algolia']['indexName'],
-        ];
-
-        require $templatePath;
-    }
-
     public function runAddEntity()
     {
         try {

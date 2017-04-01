@@ -15,7 +15,6 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 ### backend
 
-- divide controller in 2 parts: 1 for the main page, the other for the api
 - entity handling should be done by the controller. Model will be a bit like doctrine's repositories or entity manager
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
