@@ -131,7 +131,6 @@ These are ideas I've had to improve the project, that either should've been done
 
 ### frontend
 
-- ignore some keyboard shortcuts when the add form is focused, eg pressing "/" focuses the search input
 - add keyboard navigation for the results
 - include fetch polyfill using npm?
 - if more libs are used, perhaps use something like gulp to build stuff

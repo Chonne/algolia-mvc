@@ -68,16 +68,13 @@ const AlgoliaApp = (function() {
 
         // Pressing keys in the search input
         searchInput.addEventListener('keyup', function (e) {
-            const toSearch = this.value;
-            e.stopPropagation();
-
-            executeSearch(toSearch);
+            executeSearch(this.value);
         });
 
         addButton.addEventListener('click', showAddForm);
 
         document.addEventListener('keyup', function (e) {
-            if (e.key === '/' && !e.ctrlKey && !e.altKey) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.key === '/' && !e.ctrlKey && !e.altKey) {
                 searchInput.select();
             }
 
