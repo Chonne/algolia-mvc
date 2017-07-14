@@ -6,6 +6,10 @@ This was done for a recruitment test, which I've failed, mainly because of the b
 
 Most of the issues will be fixed, just for the sake of doing it properly. No libs will be used, unless really needed (eg phpunit). This will still be a POC and isn't meant to be used in production. If that had been the case, I would've used existing libraries and a basic framework such as Silex (no need to reinvent the wheel).
 
+## Demo
+
+You can try it out here: https://algolia-mvc.shaun.fr/
+
 ## Requirements
 
 - [Composer](https://getcomposer.org/download/)
@@ -15,6 +19,9 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 ## Install instructions
 
 ```
+# clone the repo
+git clone https://github.com/Chonne/algolia-mvc .
+
 # get composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
