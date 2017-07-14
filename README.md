@@ -10,7 +10,7 @@ Most of the issues will be fixed, just for the sake of doing it properly. No lib
 
 - [Composer](https://getcomposer.org/download/)
 - php >= 5.4
-- Web server with rewrite capabilities
+- Web server (I've been using Apache)
 
 ## Install instructions
 
@@ -37,7 +37,6 @@ Apache virtualhost configuration example, highly inspired by Symfony's default h
 # 100-algolia-mvc.conf
 <VirtualHost *:80>
         DocumentRoot /var/www/html/web/
-        # LogLevel alert rewrite:trace3
         ErrorLog /var/log/apache2/algolia-mvc.fr-error_log
         CustomLog /var/log/apache2/algolia-mvc.fr-access_log combined
         DirectoryIndex index.php
@@ -47,34 +46,21 @@ Apache virtualhost configuration example, highly inspired by Symfony's default h
                 Require all denied
         </Directory>
 
-        SetEnv APP_ENV dev
-        SetEnv APP_NAME AlgoliaMVC
-
         <Directory "/var/www/html/web">
-                Options Indexes FollowSymLinks
+                Options -Indexes
                 Require all granted
 
-                # Contents copied from Symfony 2's main .htaccess and adapted
-                RewriteEngine on
-
-                # Sets the HTTP_AUTHORIZATION header removed by apache
-                RewriteCond %{HTTP:Authorization} .
-                RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-                # If the requested filename exists, simply serve it.
-                # We only want to let Apache serve files and not directories.
-                RewriteCond %{REQUEST_FILENAME} -f
-                RewriteRule .? - [L]
-
-                # Rewrite all other queries to the front controller.
-                RewriteRule .? %{ENV:BASE}/index.php [L]
+                FallbackResource /index.php
         </Directory>
 </VirtualHost>
 ```
 
+If you're using a managed host that doesn't allow you to set your own virtual hosts, make sure your subdomain's root is the `web` folder and that it supports `.htaccess` files.
+
+
 #### Dockerfile
 
-All the libs aren't mandatory, it's just an example. Note that a virtualhost conf and php.ini files should be available in the same folder for this to work.
+Note that a virtualhost conf file should be available in the same folder for this to work.
 
 See the docker compose file to launch it.
 
@@ -83,27 +69,12 @@ FROM php:5.6.30-apache
 
 RUN apt-get update && apt-get install -y \
     git \
-    libpng-dev \
-    php5-gd \
-    unzip \
-    zlib1g-dev \
-    libicu-dev \
-    g++
-
-RUN docker-php-ext-configure \
-    intl
-
-RUN docker-php-ext-install \
-    gd \
-    intl
+    unzip
 
 RUN usermod -u 1000 www-data
 
-COPY php.ini /usr/local/etc/php/
-
 COPY 100-algolia-mvc.conf /etc/apache2/sites-available/100-algolia-mvc.conf
-RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load \
-    && ln -s /etc/apache2/sites-available/100-algolia-mvc.conf /etc/apache2/sites-enabled/100-algolia-mvc.conf \
+RUN ln -s /etc/apache2/sites-available/100-algolia-mvc.conf /etc/apache2/sites-enabled/100-algolia-mvc.conf \
     && rm /etc/apache2/sites-enabled/000-default.conf
 
 RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
@@ -144,7 +115,6 @@ These are ideas I've had to improve the project, that either should've been done
 
 ### backend
 
-- get rid alltogether of the Entity\App class?
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
 - use a Router class?
@@ -154,6 +124,7 @@ These are ideas I've had to improve the project, that either should've been done
 
 ### frontend
 
+- ignore some keyboard shortcuts when the add form is focused, eg pressing "/" focuses the search input
 - add keyboard navigation for the results
 - include fetch polyfill using npm?
 - if more libs are used, perhaps use something like gulp to build stuff
