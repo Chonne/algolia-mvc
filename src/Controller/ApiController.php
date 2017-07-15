@@ -2,10 +2,12 @@
 
 namespace AlgoliaApp\Controller;
 
-use AlgoliaApp\Entity\App as AppEntity;
-
 class ApiController extends Controller
 {
+    /**
+     *
+     * @throws \RuntimeException
+     */
     public function runAddEntity()
     {
         try {
@@ -25,8 +27,10 @@ class ApiController extends Controller
             $this->response->setResponseCode(201);
 
             $this->response->render($objectId);
+        } catch (\InvalidArgumentException $e) {
+            throw new \RuntimeException('Entity could not be created: ' . $e->getMessage(), 400, $e);
         } catch (\Exception $e) {
-            throw new \Exception('Entity could not be created: ' . $e->getMessage(), 400, $e);
+            throw new \RuntimeException('Entity could not be created: ' . $e->getMessage(), 500, $e);
         }
     }
 

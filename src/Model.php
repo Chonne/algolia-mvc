@@ -42,7 +42,11 @@ class Model
 
     /**
      * Removes the entity from the index
+     *
      * @param  string|integer $id ObjectID of the entity to remove
+     *
+     * @throws \AlgoliaSearch\AlgoliaException
+     * @throws \Exception
      */
     public function delete($id)
     {
@@ -51,8 +55,11 @@ class Model
 
     /**
      * Validates data before sending it to the indexer
-     * @param  array  $data
+     *
+     * @param  array $data
+     *
      * @return array
+     * @throws \InvalidArgumentException
      */
     public function validateData(array $data)
     {
@@ -65,8 +72,11 @@ class Model
 
     /**
      * Checks if the entity has all the required fields
-     * @param  array   $data
+     *
+     * @param  array $data
+     *
      * @return boolean
+     * @throws \InvalidArgumentException
      */
     private function hasAllRequiredFields(array $data)
     {
@@ -77,20 +87,25 @@ class Model
                 throw new \InvalidArgumentException('Field cannot be empty: ' . $field);
             }
         }
+
+        return true;
     }
 
     /**
      * Checks if the data doesn't have any extra unwanted fields and throws an
      * exception if it's the case
-     * @param  array   $data
-     * @return boolean
+     *
+     * @param  array $data
+     *
+     * @return array
+     * @throws \OutOfRangeException
      */
     private function hasUnknownFields(array $data)
     {
         $keys = array_keys($data);
 
         foreach ($keys as $key) {
-            if (!in_array($key, $this->fields)) {
+            if (!in_array($key, $this->fields, true)) {
                 throw new \OutOfRangeException('Unknown field: '.$key);
             }
         }

@@ -7,7 +7,6 @@
         <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
         <script src="/js/lib/polyfill-fetch.js"></script>
         <script src="/js/app.js"></script>
-        <!-- TODO: add polyfill for fetch -->
     </head>
 
     <body>

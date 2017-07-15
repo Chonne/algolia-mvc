@@ -2,6 +2,7 @@
 
 namespace AlgoliaApp;
 
+use AlgoliaApp\Controller\Controller;
 use AlgoliaSearch\Client;
 use AlgoliaSearch\Index;
 
@@ -40,6 +41,7 @@ class Application
     /**
      *
      * @param array $config
+     * @param array $routes
      */
     public function __construct(array $config, array $routes)
     {
@@ -62,7 +64,7 @@ class Application
                     call_user_func_array([$this->controller, $this->action], $this->actionParams);
                 }
             } else {
-                throw new \Exception('Unknown action: ' . $this->action, 404);
+                throw new \InvalidArgumentException('Unknown action: ' . $this->action, 404);
             }
         } catch (\Exception $e) {
             (new Response())->renderError($e->getCode(), $e->getMessage());
@@ -90,7 +92,7 @@ class Application
         list($controller, $action, $actionParams) = $this->getRouteAction($route, $_SERVER['REQUEST_METHOD']);
 
         if (empty($action)) {
-            throw new \Exception('Unknown route: "' . $route . '" for method "' . $_SERVER['REQUEST_METHOD'] . '"', 404);
+            throw new \InvalidArgumentException('Unknown route: "' . $route . '" for method "' . $_SERVER['REQUEST_METHOD'] . '"', 404);
         }
 
         $this->action = $action;
@@ -113,7 +115,8 @@ class Application
      *
      * @param  string  $route
      * @param  string  $method HTTP request method
-     * @return boolean
+     *
+     * @return array
      */
     private function getRouteAction($route, $method)
     {
@@ -140,8 +143,11 @@ class Application
 
     /**
      * Initializes Algolia's index
+     *
      * @param array $indexParams
+     *
      * @return Index
+     * @throws \Exception
      */
     private function initSearchIndex(array $indexParams)
     {
@@ -151,8 +157,6 @@ class Application
             $indexParams['apiKey_admin']
         );
 
-        $index = $client->initIndex($indexParams['indexName']);
-
-        return $index;
+        return $client->initIndex($indexParams['indexName']);
     }
 }

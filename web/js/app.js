@@ -214,7 +214,6 @@ const AlgoliaApp = (function() {
     function searchCallback(err, content) {
         if (err) {
             updateMsg(error, 'error');
-            return;
         } else {
             removeAllChildren(resultsEl);
 
@@ -227,7 +226,7 @@ const AlgoliaApp = (function() {
     }
 
     /**
-     * @param  {string|integer}   id
+     * @param  {string|int}   id
      * @param  {Function} callback
      * @param  {Boolean}  isConfirmed
      */
