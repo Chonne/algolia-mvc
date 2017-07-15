@@ -149,7 +149,7 @@ const AlgoliaApp = (function() {
             // 'warning',
             'error',
         ];
-        const msg = argMsg.toString();
+        let msg = argMsg.toString();
 
         if (types.indexOf(type) === -1) {
             type = types[0];
@@ -160,6 +160,11 @@ const AlgoliaApp = (function() {
             if (type !== types[i] && msgContainer.classList.contains(types[i])) {
                 msgContainer.classList.remove(types[i]);
             }
+        }
+
+        // some errors sent by fetch aren't very explicit
+        if (msg === 'TypeError: Failed to fetch') {
+            msg = 'Server could not be reached: "' + msg + '"';
         }
 
         msgContentEl.innerText = msg;
@@ -173,7 +178,7 @@ const AlgoliaApp = (function() {
             msgTimeout = setTimeout(function () {
                 // TODO: css animation to make it fade away
                 // TODO: cancel timeout if the user hovered the message?
-                msgContainer.classList.add('hidden');
+                hideMsg();
             }, 5000);
         }
     }
