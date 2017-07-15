@@ -119,9 +119,11 @@ These are ideas I've had to improve the project, that either should've been done
 
 - document the Rest API (RAML? Swagger?)
 - create a docker container with the code?
+- include docker and htaccess files to ease installation
 
 ### backend
 
+- unit tests
 - better error handling, with proper exceptions and error codes (4xx instead of 5xx if it's the user's fault)
 - validate json with schemas? Will require using an external lib
 - use a Router class?
@@ -131,6 +133,8 @@ These are ideas I've had to improve the project, that either should've been done
 
 ### frontend
 
+- a bit more responsiveness
+- addform could have both the current raw version for quick copy/pasting and a new multi inputs one
 - add keyboard navigation for the results
 - include fetch polyfill using npm?
 - if more libs are used, perhaps use something like gulp to build stuff
