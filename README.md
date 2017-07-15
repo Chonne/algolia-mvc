@@ -38,7 +38,7 @@ cp config/parameters.php.dist config/parameters.php
 
 #### Virtual host
 
-Apache virtualhost configuration example, highly inspired by Symfony's default htaccess. It also still contains the original comments. The paths are the default ones in a Debian based docker image:
+Apache virtualhost configuration example. The paths are the default ones in a Debian based docker image:
 
 ```
 # 100-algolia-mvc.conf
@@ -62,7 +62,7 @@ Apache virtualhost configuration example, highly inspired by Symfony's default h
 </VirtualHost>
 ```
 
-If you're using a managed host that doesn't allow you to set your own virtual hosts, make sure your subdomain's root is the `web` folder and that it supports `.htaccess` files.
+If you're using a managed host that doesn't allow you to set your own virtual hosts, make sure your subdomain's root is the `web` folder and that it supports `.htaccess` files. A simple `.htaccess` file is provided in the `web` folder.
 
 
 #### Dockerfile
@@ -119,7 +119,7 @@ These are ideas I've had to improve the project, that either should've been done
 
 - document the Rest API (RAML? Swagger?)
 - create a docker container with the code?
-- include docker and htaccess files to ease installation
+- include docker related files to ease installation
 
 ### backend
 
