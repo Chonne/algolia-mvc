@@ -136,7 +136,8 @@ These are ideas I've had to improve the project, that either should've been done
 - a bit more responsiveness
 - addform could have both the current raw version for quick copy/pasting and a new multi inputs one
 - add keyboard navigation for the results
-- include fetch polyfill using npm?
+- include algoliasearch js lib using npm or some other package manager?
+- include fetch polyfill using npm or some other package manager?
 - if more libs are used, perhaps use something like gulp to build stuff
 - use scss?
 - close addform when pressing "esc", if the textarea wasn't changed, otherwise ask for confirmation
