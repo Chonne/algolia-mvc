@@ -107,9 +107,12 @@ services:
       # - ${HOME}/Projects/github-algolia-mvc/_composer:/var/www/.composer
 ```
 
-To access the container as www-data and run local commands such as `php composer.phar`:
+To access the container as www-data and run local commands such as `php composer.phar install`:
 
-`docker exec --user www-data -i -t containers_php-apache_1 /bin/bash`
+```
+# in `containers_php-apache_1`, replace "containers" with the name of the folder containing your `docker-compose.yml`file
+$ docker exec --user www-data -i -t containers_php-apache_1 /bin/bash
+```
 
 ## To do
 
