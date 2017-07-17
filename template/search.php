@@ -4,7 +4,7 @@
         <title>Search with Algolia</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="/css/app.css">
-        <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js"></script>
         <script src="/js/lib/polyfill-fetch.js"></script>
         <script src="/js/app.js"></script>
     </head>
