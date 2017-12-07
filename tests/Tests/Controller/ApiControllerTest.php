@@ -23,26 +23,63 @@ class ApiControllerTest extends \PHPUnit_Framework_TestCase
             'data' => '{"foo":"bar"}',
         ];
 
-        $mockModel = $this->createMock(Model::class);
+        list($mockModel, $mockResponse) = $this->getMockDataForRunAddEntity();
+
+        $apiController = new ApiController([], $mockResponse, $mockModel);
+
+        $apiController->runAddEntity();
+    }
+
+    /**
+     * @covers ApiController::runAddEntity
+     */
+    public function testRunAddEntityWithInvalidArgument()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionCode(400);
+
+        $_POST = [
+            'data' => 'invalid_json',
+        ];
+
+        list($mockModel, $mockResponse) = $this->getMockDataForRunAddEntity();
+
+        $apiController = new ApiController([], $mockResponse, $mockModel);
+
+        $apiController->runAddEntity();
+    }
+
+    /**
+     * @covers ApiController::runAddEntity
+     */
+    public function testRunAddEntityWithMissingArgument()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionCode(400);
+
+        list($mockModel, $mockResponse) = $this->getMockDataForRunAddEntity();
+
+        $apiController = new ApiController([], $mockResponse, $mockModel);
+
+        $apiController->runAddEntity();
+    }
+
+    /**
+     * @covers ApiController::runAddEntity
+     */
+    public function testRunAddEntityWithBasicException()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionCode(500);
+
+        $_POST = [
+            'data' => '{"foo":"bar"}',
+        ];
+
+        list($mockModel, $mockResponse) = $this->getMockDataForRunAddEntity();
 
         $mockModel->method('validateData')
-            ->will($this->returnArgument(0))
-            ->with($this->anything())
-        ;
-
-        $mockModel->method('createInIndex')
-            ->willReturn(101)
-            ->with($this->anything())
-        ;
-
-        $mockResponse = $this->createMock(Response::class);
-
-        $mockResponse->method('setResponseCode')
-            ->willReturn(null)
-        ;
-
-        $mockResponse->method('render')
-            ->willReturn(null)
+            ->will($this->throwException(new \Exception()))
             ->with($this->anything())
         ;
 
@@ -68,5 +105,33 @@ class ApiControllerTest extends \PHPUnit_Framework_TestCase
         $apiController = new ApiController([], $mockResponse, $mockModel);
 
         $apiController->runDeleteEntity(101);
+    }
+
+    private function getMockDataForRunAddEntity()
+    {
+        $mockModel = $this->createMock(Model::class);
+
+        $mockModel->method('validateData')
+            ->will($this->returnArgument(0))
+            ->with($this->anything())
+        ;
+
+        $mockModel->method('createInIndex')
+            ->willReturn(101)
+            ->with($this->anything())
+        ;
+
+        $mockResponse = $this->createMock(Response::class);
+
+        $mockResponse->method('setResponseCode')
+            ->willReturn(null)
+        ;
+
+        $mockResponse->method('render')
+            ->willReturn(null)
+            ->with($this->anything())
+        ;
+
+        return [$mockModel, $mockResponse];
     }
 }
